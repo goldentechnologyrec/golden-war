@@ -1,0 +1,8 @@
+---
+# vars file for roles/grafana
+
+chemin_source: /home/adm1/ansible/beta.json
+grafana_url: ec2-15-237-92-135.eu-west-3.compute.amazonaws.com
+grafana_user: admin
+grafana_password: admin
+grafana_dashboard_path: /home/ec2-user/Grafana7/beta.json

@@ -1,0 +1,17 @@
+---
+- name: Installation de Node Exporter
+  become: yes
+  unarchive:
+    src: "{{ node_exporter_download_url }}"
+    dest: "/tmp"
+    remote_src: true
+  tags:
+    - install
+- name: Démarrage du service Node Exporter
+  become: yes
+  systemd:
+    name: node_exporter.service
+    enabled: yes
+    state: started
+  tags:
+    - start_service

@@ -1,0 +1,4 @@
+---
+# vars file for roles/prometheus
+
+prometheus_download_url: "/home/ec2-user/Grafana7/prometheus-2.11.2.linux-amd64.tar.gz"

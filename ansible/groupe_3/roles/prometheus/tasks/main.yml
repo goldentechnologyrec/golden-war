@@ -1,0 +1,20 @@
+---
+# tasks file for roles/prometheus
+
+- name: Installation de Prometheus
+  become: yes
+  unarchive:
+    src: "{{ prometheus_download_url }}"
+    dest: "/tmp"
+    remote_src: true
+  tags:
+    - install
+
+- name: Démarrage du service Prometheus
+  become: yes
+  systemd:
+    name: prometheus.service
+    enabled: yes
+    state: started
+  tags:
+    - start_service

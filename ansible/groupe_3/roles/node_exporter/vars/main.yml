@@ -1,0 +1,4 @@
+---
+# vars file for roles/node_exporter
+
+node_exporter_download_url: "/home/ec2-user/Grafana7/node_exporter-0.18.1.linux-amd64.tar.gz"

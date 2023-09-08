@@ -1,0 +1,4 @@
+---
+# vars file for roles/pushgateway
+
+pushgateway_download_url: "/home/ec2-user/Grafana7/pushgateway-0.8.0.linux-amd64.tar.gz"

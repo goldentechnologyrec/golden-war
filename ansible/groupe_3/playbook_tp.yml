@@ -1,0 +1,7 @@
+---
+- hosts: web
+  roles:
+    - grafana
+    - prometheus
+    - node_exporter
+    - pushgateway

@@ -1,0 +1,36 @@
+---
+- name: Installation et configuration de Grafana
+  become: yes
+  yum:
+    name: grafana
+    state: present
+  tags:
+        - install
+- name: Démarrage du service Grafana
+  become: yes
+  systemd:
+    name: grafana-server
+    enabled: yes
+    state: started
+  tags:
+        - start_service
+
+- name: Copy dashboard 
+  copy:
+    src: "{{ chemin_source }}"
+    dest: "{{ grafana_dashboard_path }}"
+  remote_user: ec2-user
+
+- name: Import Grafana dashboard beta
+  community.grafana.grafana_dashboard:
+    grafana_url: "http://{{ grafana_url }}:3000"
+    grafana_user: "{{ grafana_user }}"
+    grafana_password: "{{ grafana_password }}"
+    state: present
+    commit_message: Updated by ansible
+    overwrite: yes
+    path: "{{ grafana_dashboard_path }}"
+
+
+
+
