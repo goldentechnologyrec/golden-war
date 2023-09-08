@@ -1,0 +1,59 @@
+---
+- name: Installation de jenkins
+  hosts: db
+  become: true
+  tasks:
+  - name: Install Java (prerequisite)
+    yum:
+      name: java-11-amazon-corretto-devel
+      state: present
+
+  - name: Add Jenkins repo
+    get_url:
+      url: https://pkg.jenkins.io/redhat-stable/jenkins.repo
+      dest: /etc/yum.repos.d/jenkins.repo
+      validate_certs: no
+
+  - name: Import Jenkins RPM key
+    rpm_key:
+      key: https://pkg.jenkins.io/redhat/jenkins.io.key
+      state: present
+
+  - name: Install Jenkins
+    yum:
+      name: jenkins
+      state: present
+      enablerepo: jenkins
+
+  - name: Start and Enable Jenkins
+    service:
+      name: jenkins
+      state: started
+      enabled: yes
+  - name: Open Firewall Port
+    firewalld:
+      zone: public
+      port: 8080/tcp
+      permanent: true
+      state: enabled
+      immediate: true
+  
+  
+  - name: Installer Maven
+  hosts: db
+  become: yes
+  tasks:
+
+    - name: Télécharger Apache Maven
+      get_url:
+        url: https://downloads.apache.org/maven/maven-3/3.9.4/binaries/apache-maven-3.9.4-bin.tar.gz
+        dest: /tmp/apache-maven-3.9.4-bin.tar.gz
+
+    - name: Extraire Apache Maven
+      ansible.builtin.unarchive:
+        src: /tmp/apache-maven-3.9.4-bin.tar.gz
+        dest: /opt/
+        remote_src: yes
+
+...
+
