@@ -1,6 +1,6 @@
 ---
 - name: Transférer le fichier WAR vers le serveur de déploiement
-  hosts: dc #machine frontend
+  hosts: 35.180.182.174
   tasks:
     - name: Copier le fichier WAR
       ansible.builtin.copy:
