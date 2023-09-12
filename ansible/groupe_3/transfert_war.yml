@@ -1,9 +1,0 @@
----
-- name: Transférer le fichier WAR vers le serveur de déploiement
-  hosts: dc
-  tasks:
-    - name: Copier le fichier WAR
-      ansible.builtin.copy:
-        src: /appli/archiveArtifacts/golden.war
-        dest: /opt/tomcat/apache-tomcat-10.0.23/webapps #sur la machine frontend
-      become: yes  
