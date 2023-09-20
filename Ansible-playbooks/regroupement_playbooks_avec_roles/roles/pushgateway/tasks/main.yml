@@ -1,0 +1,33 @@
+---
+    - name: Télécharger Pushgateway
+      get_url:
+        url: "{{ pushgateway_download_url }}"
+        dest: "/home/ec2-user/Grafana7/"
+      tags:
+        - download
+
+    - name: Installation du Pushgateway
+      become: yes
+      unarchive:
+        src: "/home/ec2-user/Grafana7/{{ pushgateway_download_url | basename }}"
+        dest: "{{ pushgateway_extraction_directory }}"
+        remote_src: true
+      tags:
+        - install
+
+    - name: Copier serveur Pushgateway
+      copy:
+        src: "/etc/systemd/system/{{ pushgateway_service_name }}"
+        dest: "{{ systemd_service_directory }}"
+      tags:
+        - copy_service_file
+
+    - name: Démarrage du service Pushgateway
+      become: yes
+      systemd:
+        name: "{{ pushgateway_service_name }}"
+        enabled: yes
+        state: started
+      tags:
+        - start_service
+

@@ -1,0 +1,33 @@
+---
+    - name: Télécharger Node Exporter
+      get_url:
+        url: "{{ node_exporter_download_url }}"
+        dest: "/home/ec2-user/Grafana7/{{ node_exporter_archive_filename }}"
+      tags:
+        - download
+
+    - name: Installation de Node Exporter
+      become: yes
+      unarchive:
+        src: "/home/ec2-user/Grafana7/{{ node_exporter_archive_filename }}"
+        dest: "{{ node_exporter_extraction_directory }}"
+        remote_src: true
+      tags:
+        - install
+
+    - name: Copier serveur Node-export
+      copy:
+        src: "/etc/systemd/system/{{ node_exporter_service_name }}"
+        dest: "{{ systemd_service_directory }}"
+      tags:
+        - copy_service_file
+
+    - name: Démarrage du service Node Exporter
+      become: yes
+      systemd:
+        name: "{{ node_exporter_service_name }}"
+        enabled: yes
+        state: started
+      tags:
+        - start_service
+

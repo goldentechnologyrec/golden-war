@@ -1,0 +1,27 @@
+---
+    - name: Installation et configuration de Grafana
+      yum:
+        name: "{{ grafana_package_name }}"
+        state: present
+      tags:
+        - install
+
+    - name: Démarrage du service Grafana
+      systemd:
+        name: "{{ grafana_service_name }}"
+        enabled: yes
+        state: started
+      tags:
+        - start_service
+
+    - name: Créer "{{ grafana_home_directory }}"
+      file:
+        path: "{{ grafana_home_directory }}"
+        state: directory
+
+    - name: Copy dashboard
+      copy:
+        src: "{{ dashboard_src_path }}"
+        dest: "{{ dashboard_dest_path }}"
+        remote_user: ec2-user
+

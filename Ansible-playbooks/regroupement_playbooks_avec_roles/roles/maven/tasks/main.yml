@@ -1,0 +1,12 @@
+---
+    - name: Télécharger Apache Maven
+      get_url:
+        url: "{{ maven_download_url }}"
+        dest: "{{ maven_dest_directory }}{{ maven_archive_filename }}"
+    
+    - name: Extraire Apache Maven
+      ansible.builtin.unarchive:
+        src: "{{ maven_dest_directory }}{{ maven_archive_filename }}"
+        dest: "{{ maven_dest_directory }}"
+        remote_src: yes
+

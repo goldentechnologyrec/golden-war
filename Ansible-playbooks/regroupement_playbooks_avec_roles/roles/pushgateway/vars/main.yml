@@ -1,0 +1,6 @@
+---
+pushgateway_download_url: "https://github.com/prometheus/pushgateway/releases/download/v1.6.2/pushgateway-1.6.2.linux-amd64.tar.gz"
+pushgateway_extraction_directory: "/tmp"
+pushgateway_service_name: "pushgateway.service"
+systemd_service_directory: "/etc/systemd/system/"
+

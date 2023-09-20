@@ -1,0 +1,43 @@
+---
+    - name: Ajout du référentiel Jenkins
+      get_url:
+        url: "{{ jenkins_repo_url }}"
+        dest: "/etc/yum.repos.d/jenkins.repo"
+        validate_certs: yes
+        mode: '0644'
+    
+    - name: Import Jenkins RPM key
+      rpm_key:
+        key: "{{ jenkins_rpm_key_url }}"
+        state: present
+
+    - name: Mise à jour des paquets
+      yum:
+        name: '*'
+        state: latest
+
+    - name: Install Jenkins
+      yum:
+        name: jenkins
+        state: present
+        enablerepo: jenkins
+        disable_gpg_check: yes
+
+    - name: Start and Enable Jenkins
+      service:
+        name: jenkins
+        state: started
+        enabled: yes
+
+    - name: Afficher le mot de passe initial de Jenkins
+      command: "cat {{ jenkins_initial_password_file }}"
+      register: jenkins_password
+      changed_when: false
+      ignore_errors: yes
+
+
+    - name: Afficher le mot de passe initial
+      debug:
+        var: jenkins_password.stdout
+
+

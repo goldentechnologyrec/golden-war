@@ -1,0 +1,21 @@
+---
+- name: Installation des produits
+  hosts: frontend
+  become: yes
+  roles:
+    - tomcat
+    - terraform
+    - openjdk11-frontend
+
+- name: Installation des produits
+  hosts: backend
+  become: yes
+  roles:
+    - maven
+    - pushgateway
+    - grafana
+    - prometheus
+    - jenkins
+    - openjdk11-backend
+    - node_exporter
+

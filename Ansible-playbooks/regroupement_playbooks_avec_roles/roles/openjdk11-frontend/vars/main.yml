@@ -1,0 +1,4 @@
+---
+java_package_name: "java-11-amazon-corretto-devel"
+java_home_path: "/usr/lib/jvm/java-11-amazon-corretto.x86_64/bin/"
+

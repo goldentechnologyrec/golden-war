@@ -1,0 +1,61 @@
+---
+    - name: Add group "{{ tomcat_group_name }}"
+      group:
+        name: "{{ tomcat_group_name }}"
+
+    - name: Add user "{{ tomcat_user_name }}"
+      user:
+        name: "{{ tomcat_user_name }}"
+        group: "{{ tomcat_group_name }}"
+        createhome: yes
+
+    - name: Download Tomcat
+      get_url:
+        url: "{{ tomcat_download_url }}"
+        dest: "{{ tomcat_source_directory }}"
+
+    - name: Create "{{ tomcat_installation_directory }}"
+      file:
+        path: "{{ tomcat_installation_directory }}"
+        state: directory
+
+    - name: Extract Tomcat
+      ansible.builtin.unarchive:
+        src: "{{ tomcat_source_directory }}"
+        dest: "{{ tomcat_installation_directory }}"
+        remote_src: yes
+
+    - name: Change ownership of Tomcat
+      file:
+        path: "{{ tomcat_installation_directory }}/apache-tomcat-10.0.23/"
+        owner: "{{ tomcat_user_name }}"
+        group: "{{ tomcat_group_name }}"
+        state: directory
+        recurse: yes
+
+    - name: Copier context.xml
+      copy:
+        src: /home/adm1/Tp_ansible/context.xml
+        dest: /opt/tomcat/apache-tomcat-10.0.23/webapps/manager/META-INF/context.xml  # Chemin de destination sur la machine cible
+
+    - name: Copier contexthosts.xml
+      copy:
+        src: /home/adm1/Tp_ansible/contexthosts.xml
+        dest: /opt/tomcat/apache-tomcat-10.0.23/webapps/host-manager/META-INF/context.xml
+
+    - name: copier tomcat-users.xml
+      copy:
+        src: /home/adm1/Tp_ansible/tomcat-users.xml
+        dest: /opt/tomcat/apache-tomcat-10.0.23/conf/tomcat-users.xml
+
+    - name: Copier serveur de tomcat
+      copy:
+        src: /home/adm1/Tp_ansible/tomcat.service
+        dest: /etc/systemd/system/
+
+    - name: Start Tomcat
+      service:
+        name: tomcat
+        state: started
+        enabled: yes
+

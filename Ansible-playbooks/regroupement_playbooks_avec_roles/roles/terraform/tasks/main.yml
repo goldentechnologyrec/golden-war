@@ -1,0 +1,23 @@
+---
+
+    - name: Télécharger Terraform
+      get_url:
+        url: "{{ terraform_download_url }}"
+        dest: "/tmp/terraform_{{ terraform_version }}_linux_amd64.zip"
+    
+    - name: Décompresser Terraform
+      unarchive:
+        src: "/tmp/terraform_{{ terraform_version }}_linux_amd64.zip"
+        dest: "{{ terraform_dest_directory }}"
+        remote_src: yes
+        mode: '0755'
+
+    - name: Vérifier l'installation de Terraform
+      command: terraform --version
+      register: terraform_version
+      changed_when: false  # Ne pas marquer comme modifié
+
+    - name: Afficher la version de Terraform
+      debug:
+        var: terraform_version.stdout_lines
+

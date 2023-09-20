@@ -1,0 +1,6 @@
+---
+jenkins_repo_url: "https://pkg.jenkins.io/redhat-stable/jenkins.repo"
+jenkins_rpm_key_url: "https://pkg.jenkins.io/redhat/jenkins.io.key"
+jenkins_service_name: "jenkins"
+jenkins_initial_password_file: "/var/lib/jenkins/secrets/initialAdminPassword"
+

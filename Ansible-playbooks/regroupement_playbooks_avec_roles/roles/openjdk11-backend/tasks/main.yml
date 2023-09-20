@@ -1,0 +1,6 @@
+---
+- name: Install Java (prerequisite)
+  yum:
+    name: "{{ java_package_name }}"
+    state: present
+

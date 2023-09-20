@@ -1,0 +1,6 @@
+---
+prometheus_archive_src: "/home/ec2-user/Grafana7/prometheus-2.11.2.linux-amd64.tar.gz"
+prometheus_extraction_directory: "/tmp"
+prometheus_service_name: "prometheus.service"
+systemd_service_directory: "/etc/systemd/system/"
+

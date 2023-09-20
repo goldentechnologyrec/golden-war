@@ -1,0 +1,7 @@
+---
+grafana_package_name: "grafana"
+grafana_service_name: "grafana-server"
+grafana_home_directory: "/home/ec2-user/Grafana7"
+dashboard_src_path: "/home/adm1/beta.json"
+dashboard_dest_path: "{{ grafana_home_directory }}/beta.json"
+

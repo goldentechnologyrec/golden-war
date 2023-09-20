@@ -1,0 +1,26 @@
+---
+    - name: Installation de Prometheus
+      become: yes
+      unarchive:
+        src: "{{ prometheus_archive_src }}"
+        dest: "{{ prometheus_extraction_directory }}"
+        remote_src: true
+      tags:
+        - install
+
+    - name: Copier serveur Prometheus
+      copy:
+        src: "/etc/systemd/system/{{ prometheus_service_name }}"
+        dest: "{{ systemd_service_directory }}"
+      tags:
+        - copy_service_file
+
+    - name: Démarrage du service Prometheus
+      become: yes
+      systemd:
+        name: "{{ prometheus_service_name }}"
+        enabled: yes
+        state: started
+      tags:
+        - start_service
+

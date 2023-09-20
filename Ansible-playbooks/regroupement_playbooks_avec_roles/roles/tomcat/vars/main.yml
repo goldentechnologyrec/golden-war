@@ -1,0 +1,7 @@
+---
+tomcat_group_name: "tomcat"
+tomcat_user_name: "tomcat"
+tomcat_download_url: "https://archive.apache.org/dist/tomcat/tomcat-10/v10.0.23/bin/apache-tomcat-10.0.23.tar.gz"
+tomcat_installation_directory: "/opt/tomcat"
+tomcat_source_directory: "/tmp/apache-tomcat-10.0.23.tar.gz"
+

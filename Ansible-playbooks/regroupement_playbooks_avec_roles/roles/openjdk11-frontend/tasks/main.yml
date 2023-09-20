@@ -1,0 +1,9 @@
+---
+    - name: Installation d'OpenJDK 11
+      package:
+         name: "{{ java_package_name }}"
+         state: present
+
+    - name: Définir la variable JAVA_HOME
+      shell: export JAVA_HOME="{{ java_home_path }}"
+
