@@ -22,6 +22,28 @@ services:
                ports:
                        - ${PGADMIN_PORT}
                restart: unless-stopped
+        grafana:
+                image: grafana/grafana:latest
+                ports:
+                        - "3000:3000"
+                environment:
+                        - GF_SECURITY_ADMIN_PASSWORD=${GF_SECURITY_ADMIN_PASSWORD}
+                volumes:
+                        - grafana_data:/var/lib/grafana
+
+        pushgateway:
+                image: prom/pushgateway:latest
+                ports:
+                        - "9090:9090"
+                command: ["--web.listen-address=:9090"]
+
+        node_exporter:
+                image: prom/node-exporter:latest
+                ports:
+                        - "9100:9100"
+                command: ["--collector.textfile.directory=/etc/node-exporter/textfile_collector"]
+                volumes:
+                        - ./node-exporter:/etc/node-exporter/textfile_collector
 volumes:
         postgres:
                 driver: local
@@ -30,3 +52,4 @@ volumes:
                         o: 'bind'
                         device: /data/
 
+        grafana_data:
