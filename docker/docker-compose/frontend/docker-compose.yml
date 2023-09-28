@@ -1,0 +1,10 @@
+version: '3'
+services:
+
+  tomcat:
+    image: tomcat:latest
+    container_name: tomcat
+    ports:
+      - ${TOMCAT_PORT}
+
+
