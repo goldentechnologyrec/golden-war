@@ -10,5 +10,11 @@ services:
       - tomcat:/usr/local/tomcat/
 
 volumes:
-  tomcat:
+    tomcat:
+      driver: local
+      driver_opts:
+        type: 'none'
+        o: 'bind'
+        device: /data/volumes/tomcat/
+    
 

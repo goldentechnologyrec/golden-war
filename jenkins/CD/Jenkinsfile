@@ -9,6 +9,7 @@ pipeline {
     environment {
         REMOTE_HOST = '15.237.3.23'
         REMOTE_PATH = '/appli/'
+        CONTAINER_ID = a8dfdc0d5508
     }
     
     stages {
@@ -31,11 +32,11 @@ pipeline {
                 script {
                     // Utilisation de sshagent pour gérer les clés SSH
                     sshagent(credentials: ['omeg_frontend_key']) {
-                        sh "ssh ec2-user@${REMOTE_HOST} 'docker stop a8dfdc0d5508'"
+                        sh "ssh ec2-user@${REMOTE_HOST} 'docker stop ${CONTAINER_ID}'"
                         // Copier le fichier WAR sur le serveur distant
                         sh "scp golden/target/*.war ec2-user@${REMOTE_HOST}:${REMOTE_PATH}"
-                        sh "ssh ec2-user@${REMOTE_HOST} 'docker cp /appli/golden.war a8dfdc0d5508:/usr/local/tomcat/webapps/'"
-                        sh "ssh ec2-user@${REMOTE_HOST} 'docker restart a8dfdc0d5508'"
+                        sh "ssh ec2-user@${REMOTE_HOST} 'docker cp ${REMOTE_PATH}golden.war ${CONTAINER_ID}:/usr/local/tomcat/webapps/'"
+                        sh "ssh ec2-user@${REMOTE_HOST} 'docker restart ${CONTAINER_ID}'"
                     }
                 }
             }
