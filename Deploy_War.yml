@@ -1,0 +1,18 @@
+---
+- name: Deploy Golden WAR
+  hosts: 15.237.3.23
+  become: true
+  
+  tasks:
+    - name: Copy WAR to machin frontend
+      ansible.builtin.copy:
+        src: golden/target/golden.war
+        dest: /appli/golden.war
+
+    - name: Copy WAR file into Docker container Tomcat
+      command: docker cp /appli/golden.war 3e5e5bf5e77f:/usr/local/tomcat/webapps/
+
+          
+    - name: Restart Docker container
+      command: docker restart 3e5e5bf5e77f
+
